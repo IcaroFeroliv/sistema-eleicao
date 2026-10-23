@@ -7,7 +7,12 @@ public class EleicaoManager
 
     public void CadastrarCandidato(string nome, int numero)
     {
-        // Deixar vazio ou lançar NotImplementedException inicialmente
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new ArgumentException("O nome do candidato não pode ser vazio.", nameof(nome));
+
+        if (_candidatos.Any(c => c.Numero == numero))
+            throw new InvalidOperationException($"Já existe um candidato cadastrado com o número duplicado: {numero}.");
+
+        _candidatos.Add(new Candidato(nome, numero));
     }
 }
